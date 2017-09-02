@@ -12,10 +12,10 @@
     };
 </script>
 
-<style>
- /* <style lang="scss"> */
+<style lang="scss"> 
+
     .title{
-        color: red;
+        color: grey;
     }
     
-</style>
+</style>n
