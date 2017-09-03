@@ -1,35 +1,28 @@
 <template>
     <div>
-        <h1 class="title">{{ header }}</h1>
-        <hr>
-        Hello {{ $route.params.name }}
+        <fixed-header/>
         <router-view></router-view>
-
         <hr>
         <h1 class="title">{{ footer }}</h1>
     </div>
 </template>
 
 <script>
+    import FixedHeader from './components/fixed-header.vue';
+
     export default {
         name: 'app',
+        components: {
+            FixedHeader,
+        },
         data() {
             return {
-                header: 'This is the header',
-                footer: 'This is the footer',
+                footer: 'footer',
             };
         },
     };
 </script>
 
-<style lang="scss"> 
-    body {
-        background: #333;
-    }
-    .title{
-        color: red;
-        height: 50px;
-        background: #999;
-    }
-    
+ <style lang="scss">
+    @import './assets/scss/base';
 </style>n

@@ -10,7 +10,6 @@
             <Gmap-Marker v-for="(marker, index) in markers" :key="index" :position="marker.position"></Gmap-Marker>
             <Gmap-Marker v-if="place" label="&#x2605;" :position="position"></Gmap-Marker>
         </Gmap-Map>
-            {{position.lat}},{{position.lng}}
     </div>
 </template>
 
@@ -53,9 +52,15 @@
 </script>
 
 <style scoped lang="scss">
+    .autocomplete {
+        width: 100%;
+        margin: 50px auto;
+    }
     .map{
-        width: 500px;
-        height: 500px;
+        height: 0;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 60%;
     }
     .address-field {
         width: 300px;

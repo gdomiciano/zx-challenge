@@ -29,7 +29,11 @@ module.exports = {
                 exclude: /(node_modules)/,
                 // include: [resolve('src'), resolve('test')],
             },
+            {
+                test: /\.svg$/,
+                loader: 'svg-sprite-loader',
 
+            },
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
