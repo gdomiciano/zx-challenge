@@ -15,7 +15,7 @@ const apolloClient = new ApolloClient({
     // queryTransformer: addTypename,
     dataIdFromObject: r => r.id,
 });
-const mapsKey = 'AIzaSyBK6YopQF4b5TuNUIzlCfqL7QaiI5q7lto';
+const mapsKey = 'AIzaSyBLuYH7k-mAr7Q6zwxkQ7USYHViUkIUPl8';
 
 Vue.use(VueApollo, { apolloClient });
 Vue.use(VueMaps, {
