@@ -2,7 +2,7 @@
     <div class="autocomplete">
         <label>
             AutoComplete
-            <gmap-autocomplete @place_changed="setPlace"></gmap-autocomplete>
+            <gmap-autocomplete class="address-field" @place_changed="setPlace"></gmap-autocomplete>
             <button @click="usePlace">OK</button>
         </label>
         <br/>
@@ -35,7 +35,6 @@
             },
             setPlace(place) {
                 this.place = place;
-                this.usePlace();
             },
             usePlace() {
                 if (this.place) {
@@ -44,9 +43,9 @@
                         lng: this.place.geometry.location.lng(),
                     };
                     this.markers.push({ position });
-                    this.place = null;
                     this.zoom = 12;
                     this.position = position;
+                    this.place = null;
                 }
             },
         },
@@ -57,5 +56,8 @@
     .map{
         width: 500px;
         height: 500px;
+    }
+    .address-field {
+        width: 300px;
     }
 </style>
