@@ -1,19 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
 
+// const resolve = dir => path.join(__dirname, '..', dir);
+
 module.exports = {
     entry: './src/main.js',
     output: {
-        path: path.resolve(__dirname,'./dist/'),
+        path: path.resolve(__dirname, './dist/'),
         filename: 'build.js',
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
-            'vue$': 'vue/dist/vue.common.js',
-            // 'src': resolve('src'),
-            // 'assets': resolve('src/assets'),
-            // 'components': resolve('src/components'),
+            vue$: 'vue/dist/vue.common.js',
         },
     },
     module: {
@@ -26,7 +25,7 @@ module.exports = {
             {
                 test: /\.(js|vue)$/,
                 loader: 'eslint-loader',
-                enforce: "pre",
+                enforce: 'pre',
                 exclude: /(node_modules)/,
                 // include: [resolve('src'), resolve('test')],
             },
@@ -36,8 +35,8 @@ module.exports = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        'scss': 'vue-style-loader!css-loader!sass-loader',
-                        'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
+                        scss: 'vue-style-loader!css-loader!sass-loader',
+                        sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
                     },
                 },
 
@@ -48,9 +47,9 @@ module.exports = {
         new webpack.LoaderOptionsPlugin({
             vue: {
                 loader: {
-                    js: 'babel-loader'
-                }
-            }
-        })
-    ]
+                    js: 'babel-loader',
+                },
+            },
+        }),
+    ],
 };
