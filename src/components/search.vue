@@ -7,7 +7,7 @@
                 <button class="btn-find" @click="usePlace">Find Stores</button>
             </div>
         </div>
-        <Gmap-Map class="map" :zoom="zoom" :center="position" :options='options'>
+        <Gmap-Map class="map" style="width: mapSize.width ; height: mapSize.height;" :width="mapSize.width" :height="mapSize.height" :zoom="zoom" :center="position" :options='options'>
             <Gmap-Marker v-for="(marker, index) in markers" :key="index" :position="marker.position"></Gmap-Marker>
             <Gmap-Marker v-if="place" label="&#x2605;" :position="position"></Gmap-Marker>
         </Gmap-Map>
@@ -37,6 +37,10 @@
                 },
                 hasMap: true,
                 halfSize: false,
+                mapSize: {
+                    width: `${window.innerWidth}px`,
+                    height: window.innerHeight,
+                },
             };
         },
         methods: {
@@ -65,20 +69,19 @@
 <style scoped lang="scss">
     @import '../assets/scss/colors';
 
-    .search {
-        width: 100%;
-        margin: 50px auto;
-        position: relative;
-        overflow: hidden;
-    }
+    // .search {
+    //     width: 100%;
+    //     margin: 50px auto;
+    //     position: relative;
+    //     overflow: hidden;
+    // }
     // I'm not proud of it.
-    .map{
-        height: 0;
-        padding: 100%;
-        position: relative;
-        overflow: hidden;
-        right: 50%;
-    }
+    // .map{
+    //     height: 0;
+    //     // padding: 100%;
+    //     position: relative;
+    //     overflow: hidden;
+    // }
     .overlay {
         background: rgba(color($black), .75);
         color: color($grey, 50);
