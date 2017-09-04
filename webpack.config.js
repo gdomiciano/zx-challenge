@@ -27,7 +27,6 @@ module.exports = {
                 loader: 'eslint-loader',
                 enforce: 'pre',
                 exclude: /(node_modules)/,
-                // include: [resolve('src'), resolve('test')],
             },
             {
                 test: /\.svg$/,

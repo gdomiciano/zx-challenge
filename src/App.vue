@@ -2,18 +2,19 @@
     <div>
         <fixed-header/>
         <router-view></router-view>
-        <hr>
-        <h1 class="title">{{ footer }}</h1>
+        <fixed-footer/>
     </div>
 </template>
 
 <script>
     import FixedHeader from './components/fixed-header.vue';
+    import FixedFooter from './components/fixed-footer.vue';
 
     export default {
         name: 'app',
         components: {
             FixedHeader,
+            FixedFooter,
         },
         data() {
             return {

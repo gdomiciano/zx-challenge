@@ -26,6 +26,7 @@ Vue.use(VueMaps, {
         libraries: 'places',
         // libraries: 'places,drawing,visualization',
     },
+
 });
 
 const apolloProvider = new VueApollo({
