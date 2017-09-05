@@ -4,202 +4,103 @@
          <h4 v-if="loading">Loading...</h4>
 
          <ul v-if="pocSearch">
-            <li v-for="place in pocSearch" :key="place.id">
+            <!-- <li v-for="place in pocSearch" :key="place.id">
             {{ place.status }}: {{ place.tradingName }}
-            </li>
+            </li> -->
+            <li>{{pocSearch}}</li>
         </ul>
     </div>
 </template>
 
 <script>
-    import gql from 'graphql-tag';
-    import Search from '../components/search.vue';
+import gql from 'graphql-tag';
+import Search from '../components/search.vue';
 
-    const algorithm = 'NEAREST';
-    const now = (new Date()).toJSON().toString();
+export default {
+    name: 'home',
+    components: {
+        Search,
+    },
+    data() {
+        return {
+            pocSearch: [],
+            loading: 0,
+            algorithm: 'NEAREST',
+            lat: '-23.6315238',
+            lng: '-46.7018196',
+            now: (new Date()).toJSON().toString(),
+        };
+    },
+    apollo: {
+        pocSearch: {
 
-    // 464
-    const addressQuery = gql`
-        query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
-            pocSearch(now: "${now}", algorithm: "${algorithm}", lat: "${this.lat}", long: "${this.lng}") {
-                __typename
-                id
-                status
-                tradingName
-                deliveryTypes {
+            query: gql`query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
+                pocSearch(algorithm: "NEAREST", lat: "-23.632919", long: "-46.699453", now: "2017-08-01T20:00:00.000Z") {
                     __typename
-                    deliveryTypeId
-                    active
+                    id
+                    status
+                    tradingName
+                    deliveryTypes {
+                        __typename
+                        deliveryTypeId
+                        active
+                    }
+                    address {
+                        __typename
+                        address1
+                        address2
+                        number
+                        city
+                        province
+                        zip
+                        coordinates
+                    }
                 }
-                address {
-                    __typename
-                    address1
-                    address2
-                    number
-                    city
-                    province
-                    zip
-                    coordinates
-                }
-            }
-        }
-
-    `;
-
-    export default {
-        components: {
-            Search,
-        },
-        data() {
-            return {
-                pocSearch: [
-                    {
-                        __typename: 'POC',
-                        id: '880',
-                        status: 'AVAILABLE',
-                        tradingName: 'PIT STOP JOÃO DIAS',
-                        deliveryTypes: [
-                            {
-                                __typename: 'POCDeliveryType',
-                                deliveryTypeId: '464',
-                                title: 'RECEBER',
-                                active: true,
-                            },
-                            {
-                                __typename: 'POCDeliveryType',
-                                deliveryTypeId: '465',
-                                title: 'AGENDAR',
-                                active: true,
-                            },
-                            {
-                                __typename: 'POCDeliveryType',
-                                deliveryTypeId: '466',
-                                title: 'RETIRAR',
-                                active: true,
-                            },
-                        ],
-                        address: {
-                            __typename: 'POCAddress',
-                            address1: 'Rua Alexandria',
-                            address2: 'Point',
-                            number: '33',
-                            city: 'Osasco',
-                            province: 'SP',
-                            zip: '01415001',
-                            coordinates: '{"type":"Point","coordinates":[-46.733113,-23.641724]}',
-                        },
-                        phone: {
-                            __typename: 'POCPhone',
-                            phoneNumber: '(11) 3456-3546',
-                        },
-                    },
-                    {
-                        __typename: 'POC',
-                        id: '881',
-                        status: 'AVAILABLE',
-                        tradingName: 'EAB Representação Comercial',
-                        deliveryTypes: [
-                            {
-                                __typename: 'POCDeliveryType',
-                                deliveryTypeId: '464',
-                                title: 'RECEBER',
-                                active: true,
-                            },
-                            {
-                                __typename: 'POCDeliveryType',
-                                deliveryTypeId: '465',
-                                title: 'AGENDAR',
-                                active: true,
-                            },
-                            {
-                                __typename: 'POCDeliveryType',
-                                deliveryTypeId: '466',
-                                title: 'RETIRAR',
-                                active: true,
-                            },
-                        ],
-                        address: {
-                            __typename: 'POCAddress',
-                            address1: 'Rua Alexandria',
-                            address2: 'Point',
-                            number: '33',
-                            city: 'Osasco',
-                            province: 'SP',
-                            zip: '01415001',
-                            coordinates: '{"type":"Point","coordinates":[-46.66771,-23.659362]}',
-                        },
-                        phone: {
-                            __typename: 'POCPhone',
-                            phoneNumber: '(11) 3456-3546',
-                        },
-                    },
-                    {
-                        __typename: 'POC',
-                        id: '879',
-                        status: 'AVAILABLE',
-                        tradingName: 'Adega Magnislux - Pinheiros',
-                        deliveryTypes: [
-                            {
-                                __typename: 'POCDeliveryType',
-                                deliveryTypeId: '464',
-                                title: 'RECEBER',
-                                active: true,
-                            },
-                            {
-                                __typename: 'POCDeliveryType',
-                                deliveryTypeId: '465',
-                                title: 'AGENDAR',
-                                active: true,
-                            },
-                            {
-                                __typename: 'POCDeliveryType',
-                                deliveryTypeId: '466',
-                                title: 'RETIRAR',
-                                active: true,
-                            },
-                        ],
-                        address: {
-                            __typename: 'POCAddress',
-                            address1: 'Rua Alexandria',
-                            address2: 'Point',
-                            number: '33',
-                            city: 'Osasco',
-                            province: 'SP',
-                            zip: '01415001',
-                            coordinates: '{"type":"Point","coordinates":[-46.689537,-23.560505]}',
-                        },
-                        phone: {
-                            __typename: 'POCPhone',
-                            phoneNumber: '(11) 3456-3546',
-                        },
-                    },
-                ],
-                loading: 0,
+            }`,
+            variables: {
+                algorithm: 'NEAREST',
                 lat: '-23.6315238',
-                lng: '-46.7018196',
+                long: '-46.7018196',
+                now: (new Date()).toJSON().toString(),
+            },
+            operationName: 'pocSearchMethod',
+        },
+    },
+    methods: {
+        latLon(position) {
+            this.lat = position.lat;
+            // this.lng = position.lng;
+            // console.log('hey', this.$apollo.queries.pocSearchMethod);
+            this.$apollo.queries.pocSearchMethod = {
+                options: {
+                    variables: {
+                        algorithm: this.algorithm,
+                        now: this.now,
+                        lat: this.lat,
+                        lng: this.lng,
+                    },
+                },
             };
         },
-        methods: {
-            latLon(position) {
-                this.lat = position.lat;
-                this.lng = position.lng;
-            },
-        },
-        apollo: {
-            pocSearch() {
-                return {
-                    query: addressQuery,
-                    loadingKey: 'loading',
-                    variables() {
-                        return {
-                            lat: this.lat,
-                            lng: this.lng,
-                        };
-                    },
-                };
-            },
-        },
-    };
+    },
+    created() {
+        console.log(this.$apollo.queries.pocSearchMethod);
+        // this.$apollo.queries.pocSearch.pocSearchMethod({
+        //     // GraphQL document
+        //     document: addressQuery,
+        //     // Variables passed to the subscription
+        //     variables: {
+        //         lat: this.lat,
+        //         lng: this.lng,
+        //     },
+        //     // // Mutate the previous result
+        //     // updateQuery: (previousResult, { subscriptionData }) => {
+        //     //     // Here, return the new result from the previous with the new data
+        //     // },
+        // });
+    },
+};
+
 </script>
 
 <style scoped lang="scss">

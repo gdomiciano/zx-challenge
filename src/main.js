@@ -24,9 +24,6 @@ const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
 });
 
-Vue.mixin({
-    apolloProvider,
-});
 
 // Gmaps config
 Vue.use(VueMaps, {
