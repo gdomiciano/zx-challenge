@@ -1,13 +1,12 @@
 <template>
     <div>
-        <search @position="latLon(...arguments)" />
-         <h4 v-if="loading">Loading...</h4>
+        <search @position='latLon(...arguments)' />
+         <h4 v-if='loading'>Loading...</h4>
 
-         <ul v-if="pocSearch">
-            <!-- <li v-for="place in pocSearch" :key="place.id">
-            {{ place.status }}: {{ place.tradingName }}
-            </li> -->
-            <li>{{pocSearch}}</li>
+         <ul v-if='search'>
+             <li v-for='place in pocSearch' :key='place.id'>
+            {{ place.status }}: {{ place.tradingName }},
+            </li>
         </ul>
     </div>
 </template>
@@ -23,90 +22,129 @@ export default {
     },
     data() {
         return {
-            pocSearch: [],
+            pocSearch: [
+                {
+                    id: '31',
+                    status: 'AVAILABLE',
+                    tradingName: 'PIT STOP JOÃO DIAS',
+                    deliveryTypes: [
+                        {
+                            deliveryTypeId: '22',
+                            active: true,
+                        },
+                        {
+                            deliveryTypeId: '23',
+                            active: true,
+                        },
+                        {
+                            deliveryTypeId: '24',
+                            active: true,
+                        },
+                    ],
+                    address: {
+                        address1: 'Rua Alexandria',
+                        number: '33',
+                        coordinates: '{type:Point, coordinates:[-46.733113,-23.641724]}',
+                    },
+                },
+                {
+                    id: '32',
+                    status: 'AVAILABLE',
+                    tradingName: 'EAB Representação Comercial',
+                    deliveryTypes: [
+                        {
+                            deliveryTypeId: '22',
+                            active: true,
+                        },
+                        {
+                            deliveryTypeId: '23',
+                            active: true,
+                        },
+                        {
+                            deliveryTypeId: '24',
+                            active: true,
+                        },
+                    ],
+                    address: {
+                        address1: 'Rua Alexandria',
+                        number: '33',
+                        coordinates: '{type:Point, coordinates:[-46.66771,-23.659362]}',
+                    },
+                },
+                {
+                    id: '30',
+                    status: 'AVAILABLE',
+                    tradingName: 'Adega Magnislux - Pinheiros',
+                    deliveryTypes: [
+                        {
+                            deliveryTypeId: '22',
+                            active: true,
+                        },
+                        {
+                            deliveryTypeId: '23',
+                            active: true,
+                        },
+                        {
+                            deliveryTypeId: '24',
+                            active: true,
+                        },
+                    ],
+                    address: {
+                        address1: 'Rua Alexandria',
+                        number: '33',
+                        coordinates: '{type:Point, coordinates:[-46.689537,-23.560505]}',
+                    },
+                },
+            ],
             loading: 0,
             algorithm: 'NEAREST',
-            lat: '-23.6315238',
-            lng: '-46.7018196',
+            lat: '',
+            lng: '',
             now: (new Date()).toJSON().toString(),
+            search: false,
         };
     },
     apollo: {
         pocSearch: {
-
-            query: gql`query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
-                pocSearch(algorithm: "NEAREST", lat: "-23.632919", long: "-46.699453", now: "2017-08-01T20:00:00.000Z") {
-                    __typename
+            query: gql`query pocSearch($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
+                pocSearch(now: $now, algorithm: $algorithm, lat: $lat, long: $long) {
                     id
                     status
                     tradingName
                     deliveryTypes {
-                        __typename
                         deliveryTypeId
                         active
                     }
                     address {
-                        __typename
                         address1
-                        address2
                         number
-                        city
-                        province
-                        zip
                         coordinates
                     }
                 }
             }`,
             variables: {
-                algorithm: 'NEAREST',
-                lat: '-23.6315238',
-                long: '-46.7018196',
-                now: (new Date()).toJSON().toString(),
+                algorithm: this.algorithm,
+                lat: this.lat,
+                long: this.lng,
+                now: this.now,
             },
-            operationName: 'pocSearchMethod',
         },
     },
     methods: {
         latLon(position) {
             this.lat = position.lat;
-            // this.lng = position.lng;
-            // console.log('hey', this.$apollo.queries.pocSearchMethod);
-            this.$apollo.queries.pocSearchMethod = {
-                options: {
-                    variables: {
-                        algorithm: this.algorithm,
-                        now: this.now,
-                        lat: this.lat,
-                        lng: this.lng,
-                    },
-                },
-            };
+            console.log(position);
+            return this.$apollo.queries.pocSearch;
         },
-    },
-    created() {
-        console.log(this.$apollo.queries.pocSearchMethod);
-        // this.$apollo.queries.pocSearch.pocSearchMethod({
-        //     // GraphQL document
-        //     document: addressQuery,
-        //     // Variables passed to the subscription
-        //     variables: {
-        //         lat: this.lat,
-        //         lng: this.lng,
-        //     },
-        //     // // Mutate the previous result
-        //     // updateQuery: (previousResult, { subscriptionData }) => {
-        //     //     // Here, return the new result from the previous with the new data
-        //     // },
-        // });
     },
 };
 
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 
     *{
-        color:white;
+        color: red;
     }
 
 </style>

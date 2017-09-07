@@ -69,19 +69,21 @@
 <style scoped lang="scss">
     @import '../assets/scss/colors';
 
-    // .search {
-    //     width: 100%;
-    //     margin: 50px auto;
-    //     position: relative;
-    //     overflow: hidden;
-    // }
+    .search {
+        width: 100%;
+        margin: 50px auto;
+        position: relative;
+        overflow: hidden;
+    }
     // I'm not proud of it.
-    // .map{
-    //     height: 0;
-    //     // padding: 100%;
-    //     position: relative;
-    //     overflow: hidden;
-    // }
+    .map{
+        height: 0;
+        padding: 100%;
+        position: relative;
+        overflow: hidden;
+        right: 50%;
+        top: -30%;
+    }
     .overlay {
         background: rgba(color($black), .75);
         color: color($grey, 50);
@@ -94,7 +96,7 @@
         z-index: 1;
 
         &.half {
-            height: 10%;
+            height: 30%;
 
             .field-row {
                 margin: 30px auto;
