@@ -1,24 +1,29 @@
 <template>
     <div class="search">
         <div :class="['overlay', {'half': halfSize}]">
-            Let me know your location
+            <welcome v-if="!search" />
             <div class="field-row">
+                <label class="field-label">First, tell us your location:</label>
                 <gmap-autocomplete class="address-field" @place_changed="setPlace" @focus="halfSize = false"></gmap-autocomplete>
                 <button class="btn-find" @click="usePlace">Find Stores</button>
             </div>
         </div>
-        <Gmap-Map class="map" style="width: mapSize.width ; height: mapSize.height;" :width="mapSize.width" :height="mapSize.height" :zoom="zoom" :center="position" :options='options'>
-            <Gmap-Marker v-for="(marker, index) in markers" :key="index" :position="marker.position"></Gmap-Marker>
-            <Gmap-Marker v-if="place" label="&#x2605;" :position="position"></Gmap-Marker>
-        </Gmap-Map>
+        <bg-map :place="place" :zoom="zoom" :markers="markers" :position="position"/>
     </div>
 </template>
 
 <script>
+    import Welcome from '../components/welcome.vue';
+    import BgMap from '../components/bg-map.vue';
 
     export default {
         name: 'search',
+        props: ['search'],
 
+        components: {
+            Welcome,
+            BgMap,
+        },
         data() {
             return {
                 markers: [],
@@ -28,19 +33,8 @@
                     lng: -46.8761698,
                 },
                 zoom: 7,
-                options: {
-                    fullscreenControl: false,
-                    mapTypeControl: false,
-                    streetViewControl: false,
-                    zoomControl: false,
-                    scrollwheel: false,
-                },
                 hasMap: true,
                 halfSize: false,
-                mapSize: {
-                    width: `${window.innerWidth}px`,
-                    height: window.innerHeight,
-                },
             };
         },
         methods: {
@@ -76,14 +70,6 @@
         overflow: hidden;
     }
     // I'm not proud of it.
-    .map{
-        height: 0;
-        padding: 100%;
-        position: relative;
-        overflow: hidden;
-        right: 50%;
-        top: -30%;
-    }
     .overlay {
         background: rgba(color($black), .75);
         color: color($grey, 50);
@@ -105,8 +91,10 @@
     }
     .field-row {
         width: 90%;
-        margin: 50px auto;
-
+        margin: 0px auto;
+    }
+    .field-label{
+        font-size: 20px;
     }
     .address-field {
         border: black groove 3px;
